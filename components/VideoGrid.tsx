@@ -28,8 +28,8 @@ const VideoGrid: React.FC<VideoGridProps> = ({ category, isSeeMore }) => {
   return (
     <div className='mb-10 p-5'>
       <div className='flex justify-between items-end mb-3'>
-        <h2 className='text-xl font-semibold capitalize'>{category === '' ? "Latest Videos" : category}</h2>
-        <Link href={'/' + category}>
+        <h2 className='text-xl font-semibold capitalize'>{category === 'all' ? "Latest Videos" : category}</h2>
+        <Link href={'/category/' + category}>
           <Button variant="link" className={`${isSeeMore ? '' : "hidden"}`}>
             See All <ChevronRight className='text-black h-4 w-4 ' />
           </Button>

@@ -7,9 +7,12 @@ import logo from '@/public/logo.jpg'
 import { ThemeToggle } from "./ThemeToggle"
 import Image from "next/image"
 import { CategorySearch } from "./CategorySearch"
+import getAllCategory from "@/lib/getAllCategory"
 
 
-export const Navbar = () => {
+export const Navbar = async () => {
+    const categories = await getAllCategory();
+
     return (
         <Menubar className="flex justify-between border-none px-5 my-2">
             <MenubarMenu>
@@ -68,7 +71,7 @@ export const Navbar = () => {
                         </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu> */}
-                <CategorySearch />
+                <CategorySearch categories={categories} />
                 <MenubarMenu>
                     {/* <ThemeToggle /> */}
                 </MenubarMenu>

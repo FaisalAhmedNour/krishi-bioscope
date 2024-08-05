@@ -1,12 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/utils/dbConnect';
 import Video from './model';
- 
+
 dbConnect();
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+    await dbConnect(); //todo for development
+
     try {
-        const videos = await Video.find({}).populate('categories');
+        const query = req.nextUrl.searchParams;
+        const category = query.get('category');
+
+        const filter: { categories?: { $in: string[] } } = {};
+
+        if (category) {
+            filter.categories = { $in: [category] };
+        }
+
+        const videos = await Video.find(filter).populate('categories');
         return NextResponse.json({ success: true, data: videos });
     } catch (error) {
         console.error('Error fetching videos:', error);
@@ -15,6 +26,8 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+    await dbConnect();//todo for development
+
     const body = await req.json();
     const { title, link, categories, date } = body;
 
