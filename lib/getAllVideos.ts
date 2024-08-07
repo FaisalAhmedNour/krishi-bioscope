@@ -1,6 +1,6 @@
 export default async function getAllVideos() {
     try {
-        const response = await fetch('http://localhost:3000/api/videos');
+        const response = await fetch('https://krishi-bioscope-evv6laz7l-faisalahmednours-projects.vercel.app/api/videos');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
