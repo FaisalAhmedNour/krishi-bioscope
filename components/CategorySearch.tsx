@@ -59,8 +59,8 @@ export function CategorySearch({ categories }: IRecivedCategories) {
                   <SelectGroup>
                     <SelectLabel>Categories</SelectLabel>
                     {
-                      categories?.map((category) => {
-                        return <SelectItem key={category._id} value={category._id}>
+                      categories && categories?.map((category) => {
+                        return <SelectItem key={category?._id} value={category?._id}>
                           {category?.name}
                         </SelectItem>
                       })

@@ -26,8 +26,8 @@ export async function CategoryTable() {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {categories.data.map((category: IRecivedCategory, index: number) => (
-                    <TableRow key={category._id}>
+                {categories && categories?.data?.map((category: IRecivedCategory, index: number) => (
+                    <TableRow key={category?._id}>
                         <TableCell>{index < 9 && 0}{index + 1}</TableCell>
                         <TableCell className="font-medium">{category?.name}</TableCell>
                         <TableCell className="flex justify-center items-center gap-2">

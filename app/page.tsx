@@ -8,15 +8,19 @@ const Home: React.FC = async () => {
   const categories = await getAllCategories();
   const videos = await getAllVideos();
 
-  const latestVideos = videos?.data?.slice(0, 6);
+  const latestVideos = videos.length > 6 ? videos?.data?.slice(0, 6) : videos;
 
   return (
     <div className='max-w-screen-xl mx-auto'>
       <VideoGrid isSeeMore={true} videos={latestVideos} />
       {
         categories?.data?.map((category: IRecivedCategory) => {
-          const categoryVideos = videos?.data?.filter((video: IRecivedVideo) => video?.categories?.some((videoCategory:IRecivedCategory) => videoCategory?._id === category?._id));
-          const categoryVideosToShow = categoryVideos?.slice(0, 3);
+          const categoryVideos = videos ? videos?.data?.filter(
+            (video: IRecivedVideo) => video?.categories?.some(
+              (videoCategory: IRecivedCategory) => videoCategory?._id === category?._id
+            )
+          ) : []
+          const categoryVideosToShow = categoryVideos.length > 3 ? categoryVideos?.slice(0, 3) : categoryVideos;
           return <VideoGrid
             isSeeMore={true}
             key={category?._id}

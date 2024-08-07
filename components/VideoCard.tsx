@@ -1,6 +1,6 @@
+import React from 'react';
 import { format } from 'date-fns';
 import { IRecivedVideo } from '@/app/api/videos/interface';
-import React from 'react';
 
 type VideoCardProps = { video: IRecivedVideo }
 
@@ -23,9 +23,9 @@ const VideoCard: React.FC<VideoCardProps> = (props) => {
       <h3 className='font-bold text-[17px]'>{video?.title}</h3>
       <div className='mt-1'>
         <p className='font-medium text-[#606060] flex gap-1 flex-wrap'>{
-          video?.categories.map((category, index) => <span
+          video && video?.categories?.map((category, index) => <span
             key={index}
-          >{category.name}{index + 1 !== video?.categories.length && ','}</span>)
+          >{category?.name}{index + 1 !== video?.categories?.length && ','}</span>)
         }</p>
         <p className='text-[#606060] text-sm font-light text-right'>{format(video?.date, 'PPP')}</p>
       </div>
