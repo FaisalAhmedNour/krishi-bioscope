@@ -55,7 +55,7 @@ export default function VideoAddForm() {
             try {
                 const response = await axios.get('/api/categories');
                 // console.log("categories : ", response)
-                setCategories(response.data.data);
+                setCategories(response?.data?.data);
             }
             catch (error) {
                 console.error(error)
@@ -148,7 +148,7 @@ export default function VideoAddForm() {
                                         </FormDescription> */}
                                     </div>
                                     <div className="flex flex-wrap col-span-3 gap-x-4 gap-y-2">
-                                        {categories.map((category: IRecivedCategory) => (
+                                        {categories && categories?.map((category: IRecivedCategory) => (
                                             <FormField
                                                 key={category?._id}
                                                 control={form.control}
