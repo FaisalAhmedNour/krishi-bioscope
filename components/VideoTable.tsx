@@ -34,12 +34,12 @@ export async function VideoTable() {
         {videos.data?.map((video: IRecivedVideo, index: number) => {
           // const date = new Date(video?.date)
           // const viewDate = `${date.getDate()}`
-          return (<TableRow key={video._id}>
+          return (<TableRow key={video?._id}>
             <TableCell>{index < 9 && 0}{index + 1}</TableCell>
             <TableCell className="font-medium">{video.title}</TableCell>
             <TableCell className="flex flex-wrap gap-1">
               {video?.categories?.map((category, index) => (
-                <span key={index}>{category.name}{index !== video?.categories?.length - 1 && ','}</span>
+                <span key={index}>{category?.name}{index !== video?.categories?.length - 1 && ','}</span>
               ))}
             </TableCell>
             <TableCell className="text-right whitespace-nowrap">{format(video?.date, "PPP")}</TableCell>

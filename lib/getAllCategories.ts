@@ -5,9 +5,9 @@ export default async function getAllCategories() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        return data;
+        return data || [];
       } catch (error) {
         console.error('Failed to fetch data:', error);
-        return null;
+        return [];
       }
 }

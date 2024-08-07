@@ -72,7 +72,7 @@ export const Navbar = async () => {
                         </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu> */}
-                <CategorySearch categories={categories.data} />
+                <CategorySearch categories={categories?.data} />
                 <MenubarMenu>
                     {/* <ThemeToggle /> */}
                 </MenubarMenu>

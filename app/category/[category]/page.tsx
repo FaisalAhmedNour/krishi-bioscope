@@ -10,13 +10,13 @@ const SingleCategory = async ({ params }: { params: { category: string } }) => {
     const videos = await getAllVideos();
     const categories = await getAllCategories();
 
-    const categoryVideos = videos.data.filter(
-        (video: IRecivedVideo) => video.categories.some(
-            (videoCategory: IRecivedCategory) => videoCategory._id === category
+    const categoryVideos = videos?.data?.filter(
+        (video: IRecivedVideo) => video?.categories?.some(
+            (videoCategory: IRecivedCategory) => videoCategory?._id === category
         )
     );
 
-    const filterCategory = categories.data.find((cat: IRecivedCategory) => cat._id === category)
+    const filterCategory = categories?.data?.find((cat: IRecivedCategory) => cat?._id === category)
 
     return (
         <div>
