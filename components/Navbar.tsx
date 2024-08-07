@@ -7,11 +7,12 @@ import logo from '@/public/logo.jpg'
 import { ThemeToggle } from "./ThemeToggle"
 import Image from "next/image"
 import { CategorySearch } from "./CategorySearch"
-import getAllCategory from "@/lib/getAllCategory"
+import getAllCategories from "@/lib/getAllCategories"
 
 
 export const Navbar = async () => {
-    const categories = await getAllCategory();
+    const categories = await getAllCategories();
+    // console.log("categories", categories)
 
     return (
         <Menubar className="flex justify-between border-none px-5 my-2">
@@ -71,7 +72,7 @@ export const Navbar = async () => {
                         </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu> */}
-                <CategorySearch categories={categories} />
+                <CategorySearch categories={categories.data} />
                 <MenubarMenu>
                     {/* <ThemeToggle /> */}
                 </MenubarMenu>

@@ -1,9 +1,9 @@
 import { validate } from "@/utils/validate";
 import ICategory from "./interface";
-import Category from "./model";
 import { z } from "zod";
 import dbConnect from "@/utils/dbConnect";
 import { NextRequest } from "next/server";
+import Category from "./model";
 
 const categorySchema = z.object({
     name: z.string(),
@@ -12,6 +12,8 @@ const categorySchema = z.object({
 dbConnect();
 
 export async function GET() {
+    await dbConnect(); //for development
+    
     try {
         const categories: ICategory[] = await Category.find({});
         return Response.json({ success: true, data: categories }, { status: 200 });
@@ -21,8 +23,10 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+    await dbConnect(); //for development
+
     const body = await req.json();
-    console.log("body: ", body)
+    // console.log("body: ", body)
     const validation = validate(categorySchema, body);
 
     if (!validation.success) {

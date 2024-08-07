@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/utils/dbConnect';
 import Video from './model';
+import Category from '../categories/model';
 
 dbConnect();
 
@@ -8,16 +9,7 @@ export async function GET(req: NextRequest) {
     await dbConnect(); //todo for development
 
     try {
-        const query = req.nextUrl.searchParams;
-        const category = query.get('category');
-
-        const filter: { categories?: { $in: string[] } } = {};
-
-        if (category) {
-            filter.categories = { $in: [category] };
-        }
-
-        const videos = await Video.find(filter).populate('categories');
+        const videos = (await Video.find()).reverse();
         return NextResponse.json({ success: true, data: videos });
     } catch (error) {
         console.error('Error fetching videos:', error);
@@ -34,9 +26,14 @@ export async function POST(req: NextRequest) {
     if (!title || !link || !categories || !date) {
         return NextResponse.json({ success: false, message: 'All fields are required' }, { status: 400 });
     }
-
+    console.log("body",body)
     try {
-        const video = await Video.create(body);
+        const fullDataCategories = await Category.find({_id: { $in: categories }})
+        console.log("fullDataCategories", fullDataCategories)
+
+        const video = await Video.create({
+            title, link, categories: fullDataCategories, date
+        });
         return NextResponse.json({ success: true, data: video }, { status: 201 });
     } catch (error) {
         console.error('Error creating video:', error);

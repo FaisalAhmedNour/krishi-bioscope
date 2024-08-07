@@ -19,12 +19,13 @@ import {
 } from "@/components/ui/form"
 import { z } from "zod";
 import { useRouter } from "next/navigation";
+import { IRecivedCategories } from "@/app/api/categories/interface"
 
 const FormSchema = z.object({
   category: z.string()
 })
 
-export function CategorySearch({ categories }) {
+export function CategorySearch({ categories }: IRecivedCategories) {
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -33,7 +34,6 @@ export function CategorySearch({ categories }) {
   const router = useRouter();
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data)
     router.push(`/category/${data.category}`);
   }
 
@@ -59,8 +59,8 @@ export function CategorySearch({ categories }) {
                   <SelectGroup>
                     <SelectLabel>Categories</SelectLabel>
                     {
-                      categories?.data?.map((category) => {
-                        return <SelectItem value={category._id}>
+                      categories?.map((category) => {
+                        return <SelectItem key={category._id} value={category._id}>
                           {category?.name}
                         </SelectItem>
                       })

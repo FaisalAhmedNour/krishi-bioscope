@@ -63,12 +63,13 @@ export default function CategoryAddForm() {
     })
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
-        console.log(data)
+        // console.log(data)
         try {
             const response = await axios.post('/api/categories', data);
-            console.log("categories : ", response)
+            // console.log("categories : ", response)
             // setCategories(response.data.data);
             setIsOpen(false); 
+            form.reset()
         }
         catch (error) {
             console.error(error)

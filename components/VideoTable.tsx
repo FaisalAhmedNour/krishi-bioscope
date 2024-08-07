@@ -1,5 +1,3 @@
-"use client"
-
 import Link from "next/link"
 import {
   Table,
@@ -12,41 +10,12 @@ import {
 } from "@/components/ui/table"
 import { Edit, Trash2 } from "lucide-react"
 import VideoAddForm from "./VideoAddForm"
-import { useEffect, useState } from "react"
-import axios from "axios"
 import { format } from "date-fns"
+import getAllVideos from "@/lib/getAllVideos"
+import { IRecivedVideo } from "@/app/api/videos/interface"
 
-// const Videos = [
-//   {
-//     title: "INV001",
-//     caterories: ["Paid", "Unpaid"],
-//     date: "$250.00",
-//     link: "Credit Card",
-//   },
-//   {
-//     title: "INV001",
-//     caterories: ["Paid", "Unpaid"],
-//     date: "$250.00",
-//     link: "Credit Card",
-//   }
-// ]
-
-export function VideoTable() {
-  const [videos, setVideos] = useState([]);
-
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const response = await axios.get('/api/videos');
-        console.log("videos : ", response)
-        setVideos(response.data.data);
-      }
-      catch (error) {
-        console.error(error)
-      }
-    }
-    fetchVideos()
-  }, [])
+export async function VideoTable() {
+  const videos = await getAllVideos()
 
   return (
     <Table className="border">
@@ -62,10 +31,10 @@ export function VideoTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {videos?.map((video, index) => {
+        {videos.data?.map((video: IRecivedVideo, index: number) => {
           // const date = new Date(video?.date)
           // const viewDate = `${date.getDate()}`
-          return (<TableRow key={index}>
+          return (<TableRow key={video._id}>
             <TableCell>{index < 9 && 0}{index + 1}</TableCell>
             <TableCell className="font-medium">{video.title}</TableCell>
             <TableCell className="flex flex-wrap gap-1">

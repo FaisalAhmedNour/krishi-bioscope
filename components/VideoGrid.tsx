@@ -1,58 +1,40 @@
-"use client"
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import Link from 'next/link';
 import VideoCard from './VideoCard';
 import { Button } from './ui/button';
 import { ChevronRight } from "lucide-react"
-import Link from 'next/link';
-import axios from 'axios';
+import { IRecivedVideo } from '@/app/api/videos/interface';
+import { IRecivedCategory } from '@/app/api/categories/interface';
 
 interface VideoGridProps {
-  category: string;
+  category?: IRecivedCategory;
+  videos: IRecivedVideo[];
   isSeeMore?: boolean;
 }
 
-const VideoGrid: React.FC<VideoGridProps> = ({ category, isSeeMore }) => {
-  const [videos, setVideos] = useState([]);
-
-  useEffect(() => {
-    const fetchVideos = async () => {
-      const response = await axios.get('/api/videos');
-      console.log(response)
-      setVideos(response.data.data);
-    };
-
-    fetchVideos();
-  }, [category]);
-
+const VideoGrid: React.FC<VideoGridProps> = async ({ category, videos, isSeeMore }) => {
   return (
     <div className='mb-10 p-5'>
       <div className='flex justify-between items-end mb-3'>
-        <h2 className='text-xl font-semibold capitalize'>{category === 'all' ? "Latest Videos" : category}</h2>
-        <Link href={'/category/' + category}>
+        <h2 className='text-xl font-semibold capitalize'>{category ? category?.name : "Latest Videos"}</h2>
+        <Link href={'/category/' + category?._id}>
           <Button variant="link" className={`${isSeeMore ? '' : "hidden"}`}>
             See All <ChevronRight className='text-black h-4 w-4 ' />
           </Button>
         </Link>
       </div>
-      <div className='grid grid-cols-3 gap-5 gap-y-10'>
-        {videos?.map((video) => (
-          <VideoCard
-            key={video?._id}
-            video={video}
-          // title={video.title}
-          // link={video.link}
-          // date={new Date(video.date).toLocaleDateString()}
-          // category={video.category.name}
-          />
-        ))}
-        {/* <VideoCard />
-        <VideoCard />
-        <VideoCard />
-        <VideoCard />
-        <VideoCard />
-        <VideoCard /> */}
-      </div>
+      {
+        videos.length > 0 ?
+          <div className='grid grid-cols-3 gap-5 gap-y-10'>
+            {videos?.map((video: IRecivedVideo) => (
+              <VideoCard
+                key={video?._id}
+                video={video}
+              />
+            ))}
+          </div> :
+          <p className='text-ld font-semibold px-5'>No Vidos Found!</p>
+      }
     </div>
   );
 };

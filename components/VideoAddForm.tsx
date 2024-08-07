@@ -4,35 +4,23 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue
-} from "@/components/ui/select"
+} from "@/components/ui/dialog";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Plus } from "lucide-react"
 import { CalendarIcon } from "lucide-react"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -40,12 +28,13 @@ import {
 } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { array, date, object, string, z } from "zod"
+import { date, object, string, z } from "zod"
 import { useToast } from "@/components/ui/use-toast"
 import { format } from "date-fns"
 import React, { useEffect, useState } from "react"
 import { Checkbox } from "./ui/checkbox"
 import axios from "axios"
+import { IRecivedCategory } from "@/app/api/categories/interface"
 
 const FormSchema = object({
     link: string().nonempty({ message: "Email is required" }),
@@ -55,18 +44,17 @@ const FormSchema = object({
     }),
     date: date()
 })
-// const categories: string[] = ['category1', 'category2', 'category3']
 
 export default function VideoAddForm() {
     const { toast } = useToast()
-    const [categories, setCategories] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
+    const [categories, setCategories] = useState([]);
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
                 const response = await axios.get('/api/categories');
-                console.log("categories : ", response)
+                // console.log("categories : ", response)
                 setCategories(response.data.data);
             }
             catch (error) {
@@ -87,15 +75,15 @@ export default function VideoAddForm() {
     })
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
-        // console.log(data)
         try {
             const response = await axios.post('/api/videos', data);
-            console.log("categories : ", response)
+            // console.log("categories : ", response)
             // setCategories(response.data.data);
             toast({
                 title: "Your message has been sent.",
             })
             setIsOpen(false);
+            form.reset()
         }
         catch (error) {
             console.error(error)
@@ -160,7 +148,7 @@ export default function VideoAddForm() {
                                         </FormDescription> */}
                                     </div>
                                     <div className="flex flex-wrap col-span-3 gap-x-4 gap-y-2">
-                                        {categories.map((category) => (
+                                        {categories.map((category: IRecivedCategory) => (
                                             <FormField
                                                 key={category?._id}
                                                 control={form.control}

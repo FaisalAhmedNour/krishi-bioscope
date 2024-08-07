@@ -1,5 +1,3 @@
-"use client"
-
 import {
     Table,
     TableBody,
@@ -9,27 +7,13 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Edit, Plus, Trash2 } from "lucide-react"
+import { Edit, Trash2 } from "lucide-react"
 import CategoryAddForm from "./CategoryAddForm"
-import { useEffect, useState } from "react"
-import axios from "axios"
+import getAllCategories from "@/lib/getAllCategories";
+import { IRecivedCategory } from "@/app/api/categories/interface";
 
-export function CategoryTable() {
-    const [categories, setCategories] = useState([]);
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const response = await axios.get('/api/categories');
-                console.log("categories : ", response)
-                setCategories(response.data.data);
-            }
-            catch (error) {
-                console.error(error)
-            }
-        }
-        fetchCategories()
-    }, [])
+export async function CategoryTable() {
+    const categories = await getAllCategories();
 
     return (
         <Table className="border">
@@ -42,8 +26,8 @@ export function CategoryTable() {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {categories.map((category, index) => (
-                    <TableRow key={index}>
+                {categories.data.map((category: IRecivedCategory, index: number) => (
+                    <TableRow key={category._id}>
                         <TableCell>{index < 9 && 0}{index + 1}</TableCell>
                         <TableCell className="font-medium">{category?.name}</TableCell>
                         <TableCell className="flex justify-center items-center gap-2">
