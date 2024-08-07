@@ -1,4 +1,4 @@
 export default async function getAllCategories() {
-    const response = await fetch('https://krishi-bioscope-2-r8p2gn2t8-faisalahmednours-projects.vercel.app/api/categories');
+    const response = await fetch('http://localhost:3000/api/categories');
     return response.json();
 }
