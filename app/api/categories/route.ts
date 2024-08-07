@@ -12,7 +12,7 @@ const categorySchema = z.object({
 dbConnect();
 
 export async function GET() {
-    await dbConnect(); //for development
+    // await dbConnect(); //for development
     
     try {
         const categories: ICategory[] = await Category.find({});
@@ -23,7 +23,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-    await dbConnect(); //for development
+    // await dbConnect(); //for development
 
     const body = await req.json();
     // console.log("body: ", body)
