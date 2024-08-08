@@ -6,9 +6,16 @@ import getAllVideos from "@/lib/getAllVideos";
 
 const SingleCategory = async ({ params }: { params: { category: string } }) => {
     const { category } = params;
-    
+
     const videos = await getAllVideos();
     const categories = await getAllCategories();
+
+    if(category === 'all'){
+        // console.log('all')
+        return (
+            <VideoGrid videos={videos?.data} isSeeMore={false} />
+        )
+    }
 
     const categoryVideos = videos?.data?.filter(
         (video: IRecivedVideo) => video?.categories?.some(
@@ -19,9 +26,7 @@ const SingleCategory = async ({ params }: { params: { category: string } }) => {
     const filterCategory = categories?.data?.find((cat: IRecivedCategory) => cat?._id === category)
 
     return (
-        <div>
-            <VideoGrid category={filterCategory} videos={categoryVideos} isSeeMore={false} />
-        </div>
+        <VideoGrid category={filterCategory} videos={categoryVideos} isSeeMore={false} />
     )
 }
 

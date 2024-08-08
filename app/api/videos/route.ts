@@ -26,10 +26,10 @@ export async function POST(req: NextRequest) {
     if (!title || !link || !categories || !date) {
         return NextResponse.json({ success: false, message: 'All fields are required' }, { status: 400 });
     }
-    console.log("body",body)
+    // console.log("body",body)
     try {
         const fullDataCategories = await Category.find({_id: { $in: categories }})
-        console.log("fullDataCategories", fullDataCategories)
+        // console.log("fullDataCategories", fullDataCategories)
 
         const video = await Video.create({
             title, link, categories: fullDataCategories, date

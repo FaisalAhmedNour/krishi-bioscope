@@ -8,7 +8,7 @@ const Home: React.FC = async () => {
   const categories = await getAllCategories();
   const videos = await getAllVideos();
 
-  const latestVideos = videos.length > 6 ? videos?.data?.slice(0, 6) : videos;
+  const latestVideos = videos?.data?.length > 6 ? videos?.data?.slice(0, 6) : videos.data;
 
   return (
     <div className='max-w-screen-xl mx-auto'>

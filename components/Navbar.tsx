@@ -8,6 +8,7 @@ import { ThemeToggle } from "./ThemeToggle"
 import Image from "next/image"
 import { CategorySearch } from "./CategorySearch"
 import getAllCategories from "@/lib/getAllCategories"
+import Link from "next/link"
 
 
 export const Navbar = async () => {
@@ -17,7 +18,9 @@ export const Navbar = async () => {
     return (
         <Menubar className="flex justify-between border-none px-5 my-2">
             <MenubarMenu>
-                <Image src={logo} alt="Krishi Bioscope" className="h-12 w-12" />
+                <Link href={'/'} >
+                    <Image src={logo} alt="Krishi Bioscope" className="h-12 w-12" />
+                </Link>
             </MenubarMenu>
             <div className="flex gap-4">
                 {/* <NavigationMenu>
