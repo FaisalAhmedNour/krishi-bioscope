@@ -1,6 +1,6 @@
 export default async function getAllVideos() {
   try {
-    const response = await fetch('http://localhost:3000/api/videos', {
+    const response = await fetch('https://krishi-bioscope-faisalahmednours-projects.vercel.app/api/videos', {
       next: {
         revalidate: 10
       }

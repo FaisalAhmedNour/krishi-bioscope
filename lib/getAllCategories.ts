@@ -1,6 +1,6 @@
 export default async function getAllCategories() {
     try {
-        const response = await fetch('http://localhost:3000/api/categories', {
+        const response = await fetch('https://krishi-bioscope-faisalahmednours-projects.vercel.app/api/categories', {
             next: {
                 revalidate: 10
             }
