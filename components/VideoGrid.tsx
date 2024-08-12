@@ -25,7 +25,7 @@ const VideoGrid: React.FC<VideoGridProps> = async ({ category, videos, isSeeMore
         </Link>
       </div>
       {
-        videos.length > 0 ?
+        videos?.length > 0 ?
           <div className='grid grid-cols-3 gap-5 gap-y-10'>
             {videos && videos?.map((video: IRecivedVideo) => (
               <VideoCard

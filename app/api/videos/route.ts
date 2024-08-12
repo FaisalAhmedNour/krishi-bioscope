@@ -6,7 +6,7 @@ import Category from '../categories/model';
 dbConnect();
 
 export async function GET(req: NextRequest) {
-    // await dbConnect(); //todo for development
+    await dbConnect(); //todo for development
 
     try {
         const videos = (await Video.find()).reverse();
@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-    // await dbConnect();//todo for development
+    await dbConnect();//todo for development
 
     const body = await req.json();
     const { title, link, categories, date } = body;

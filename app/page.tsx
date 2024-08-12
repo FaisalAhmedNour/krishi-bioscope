@@ -20,7 +20,7 @@ const Home: React.FC = async () => {
               (videoCategory: IRecivedCategory) => videoCategory?._id === category?._id
             )
           ) : []
-          const categoryVideosToShow = categoryVideos.length > 3 ? categoryVideos?.slice(0, 3) : categoryVideos;
+          const categoryVideosToShow = categoryVideos?.length > 3 ? categoryVideos?.slice(0, 3) : categoryVideos;
           return <VideoGrid
             isSeeMore={true}
             key={category?._id}
